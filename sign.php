@@ -20,6 +20,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         if($num==1){
             //echo "User Already Exists";
             $user=1;
+            header('location:login.php');
         }else{
             $sql="INSERT INTO `registration`(username,password) values('$username','$password ')"; 
             $result=mysqli_query($con,$sql);

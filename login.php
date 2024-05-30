@@ -1,8 +1,6 @@
 <?php 
-
-
 $login=0;
-$invalid=1;
+$invalid=0;
 
 
 
@@ -13,17 +11,17 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $username=$_POST['username'];
     $password=$_POST['password'];
 
-    //CONFIRMING IF USERNAME AND PASSWORD BOTH MATCH WITH THE REQUIRED CREDENTIALS
-    $sql="select * from `registration` where username='$username' and password='$password' ";
+
+    $sql="select * from `registration` where username='$username' and password='$password'";
 
     $result = mysqli_query($con,$sql);
     if($result){
         //WILL COUNT THE NUMBER OF ROWS IN OUR DATABASE AND CONFIRMS IF ONLY ONE INSTANCE OF A USERNAME IS PRESENT
         $num=mysqli_num_rows($result);
-        if($num==1){
+        if($num>0){ 
             $login=1;
             session_start();
-            $_SESSION['username']=$username; 
+            $_SESSION["username"]=$username;
             header('location:home.php');
         }else{
             $invalid=1;
@@ -48,17 +46,16 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
   </body>
 
 <?php
-//CODE THAT WILL CHECK IF USER IS LOGGED IN
-if($invalid){
+  if($invalid){
      echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-     <strong>Uhh Ooh!</strong> Wrong credentials
+     <strong>Error!! </strong> Wrong username or password
      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
    </div>';
 }
 ?>
 
 <?php
-//CODE WILL EXECUTE IF USER HAS LOGGED IN SUCCESSFULLY
+//CODE WILL EXECUTE IF USER HAS SIGNED UP SUCCESSFULLY
 if($login){
      echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
      <strong>Hurray!! </strong> You have successfully logged in
@@ -66,16 +63,12 @@ if($login){
    </div>';
 }
 ?>
-
-
-    
-  
   
   
   <h1 class="text-center" >Login Page</h1>
 
   <div class="container mt-5">
-  <form action="login.php" method="post">
+  <form action="sign.php" method="post">
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Name</label>
     <input type="text" class="form-control" placeholder="Enter your username" name="username">
