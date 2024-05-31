@@ -13,18 +13,17 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
 
     $sql="select * from `registration` where username='$username' and password='$password'";
-
     $result = mysqli_query($con,$sql);
     if($result){
         //WILL COUNT THE NUMBER OF ROWS IN OUR DATABASE AND CONFIRMS IF ONLY ONE INSTANCE OF A USERNAME IS PRESENT
         $num=mysqli_num_rows($result);
-        if($num>0){ 
+        if($num==1){
             $login=1;
             session_start();
-            $_SESSION["username"]=$username;
-            header('location:home.php');
+            $_SESSION['username']=$username;
+            include('home.php');
         }else{
-            $invalid=1;
+           $invalid= 1;
         }
      }
 }
@@ -46,29 +45,34 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
   </body>
 
 <?php
-  if($invalid){
-     echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-     <strong>Error!! </strong> Wrong username or password
+//CODE WILL EXECUTE IF USER EXISTS
+if($login){
+     echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+     <strong>Hurray!</strong> Logged in successfully
      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
    </div>';
+   
 }
 ?>
 
 <?php
-//CODE WILL EXECUTE IF USER HAS SIGNED UP SUCCESSFULLY
-if($login){
-     echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-     <strong>Hurray!! </strong> You have successfully logged in
+//CODE WILL EXECUTE IF USER HAS PUT INVALID CREDENTIALS
+if($invalid){
+     echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+     <strong>Error!! </strong> Wrog credentials
      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
    </div>';
 }
 ?>
+
+    
   
   
-  <h1 class="text-center" >Login Page</h1>
+  
+  <h1 class="text-center" >Log in Page</h1>
 
   <div class="container mt-5">
-  <form action="sign.php" method="post">
+  <form action="login.php" method="post">
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Name</label>
     <input type="text" class="form-control" placeholder="Enter your username" name="username">
@@ -81,7 +85,7 @@ if($login){
   <div class="mb-3 form-check">
     
   </div>
-  <button type="submit" class="btn btn-success w-100">login</button>
+  <button type="submit" class="btn btn-success w-100">Log in</button>
 </form>
   </div>
 </html>

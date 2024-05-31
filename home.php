@@ -1,7 +1,7 @@
 <?php 
 //RESTRICTING USER TO ACCESS HOMER PAGE WITHOUT LOGGING IN FIRST
 session_start();
-if(isset($_SESSION['username'])){
+if(!isset($_SESSION['username'])){
     header("Location: login.php");
 }
 ?>
@@ -19,7 +19,7 @@ if(isset($_SESSION['username'])){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   </head>
   <body>
-    <h1>Welcome <?php echo $_SESSION['username']; ?></h1>
+    <h1>Welcome to the home page</h1>
     
   </body>
 </html>

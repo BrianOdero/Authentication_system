@@ -8,6 +8,8 @@ $DATABASE = 'authentication';
 $con=mysqli_connect($HOSTNAME,$USERNAME,$PASSWORD,$DATABASE);
 
 //VERIFYING IF CONNECTION HAS BEEN MADE
-if(!$con){
+if($con){
+    
+}else{
     die(mysqli_error($con)); 
 }
